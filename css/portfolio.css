@@ -1,6 +1,6 @@
 /********* THEME *********/
 :root {
-  --accent: #4bb3fd;         
+  --accent: #4bb3fd;
   --accent-ink: #0b2a3f;
   --ink: #1a1a1a;
   --ink-muted: #4d4d4d;
@@ -10,18 +10,24 @@
   --link: var(--accent);
   --link-ink: var(--accent-ink);
   --focus: #9ad1ff;
+  --shadow-strong: 0 5px 12px rgba(0,0,0,.35);
 }
 
-/********* GLOBAL *********/
+/* GLOBAL */
 * { box-sizing: border-box; }
-
 html, body { margin: 0; padding: 0; }
+
+/* Smooth in-page anchors (taken from sample) */
+html { scroll-behavior: smooth; }
 
 body {
   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--ink);
   background: #fff;
 }
+
+/* Optional fade-in hook (if you ever add body.fade-out via JS) */
+body.fade-out { opacity: .1; transition: opacity 3s; }
 
 h1 {
   text-transform: uppercase;
@@ -31,12 +37,7 @@ h1 {
   letter-spacing: 0.02em;
   font-weight: 700;
 }
-
-h1:hover {
-  filter: grayscale(5%);
-  transform: scale(1.05);
-  transition: transform 300ms;
-}
+h1:hover { filter: grayscale(5%); transform: scale(1.05); transition: transform 300ms; }
 
 .white-text { color: #fff; }
 
@@ -48,12 +49,11 @@ p {
   line-height: 1.7;
   font-weight: 300;
 }
-
 p:hover { transform: scale(1.01); transition: transform 200ms; }
 
 .center { text-align: center; }
 
-/* Links for a subtle animated underline */
+/* Links with subtle underline anim */
 a { color: var(--link); text-decoration: none; position: relative; }
 a.link, .Navbar a { text-underline-offset: 3px; }
 a.link::after, .Navbar a::after {
@@ -71,9 +71,9 @@ a.link::after, .Navbar a::after {
 a.link:hover::after, .Navbar a:hover::after { transform: scaleX(1); }
 
 .link-lg { font-size: 20px; font-weight: 500; }
-
 q { font-style: italic; }
 
+/* Global images */
 img {
   filter: grayscale(75%);
   border-radius: 12px;
@@ -84,17 +84,20 @@ img {
 }
 img:hover { filter: grayscale(5%); transform: scale(1.03); transition: transform 200ms; }
 
+/* This ensures slideshow images are NOT forced to 340px */
+.Slideshow_Images { height: auto !important; max-height: none; }
+
+/* Small screens */
 @media (max-width: 576px) {
   img { height: 100px; margin-top: 150px; }
+  /* But keep slideshow images full width on mobile */
+  .Slideshow_Images { height: auto !important; margin-top: 0; }
 }
 
 /* Focus outline for keyboard users */
-:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-/********* NAVBAR *********/
+/* NAVBAR */
 .Navbar {
   overflow: hidden;
   background-color: var(--navbar-bg);
@@ -104,7 +107,6 @@ img:hover { filter: grayscale(5%); transform: scale(1.03); transition: transform
   z-index: 10;
   animation: moveNav 600ms ease-out both;
 }
-
 @keyframes moveNav { from { transform: translateX(-100%); } to { transform: translateX(0%); } }
 
 .Navbar a {
@@ -117,8 +119,13 @@ img:hover { filter: grayscale(5%); transform: scale(1.03); transition: transform
   position: relative;
 }
 
+/* NEW additon: 5 items; this is to make them fit on narrow screens */
 @media (max-width: 576px) {
-  .Navbar a { width: 25%; font-size: 12px; padding: 12px 6px; }
+  .Navbar a { width: 20%; font-size: 12px; padding: 12px 6px; }
+}
+/* Medium screens – distribute evenly too */
+@media (max-width: 1080px) {
+  .Navbar a { width: 20%; }
 }
 
 .Navbar a:hover {
@@ -126,23 +133,17 @@ img:hover { filter: grayscale(5%); transform: scale(1.03); transition: transform
   color: #000;
   font-weight: 600;
 }
-
 .Navbar a.active { background-color: #2e2e2e; }
 
-/********* HERO (video) *********/
+/* Video */
 #Typing_Video {
   position: fixed;
   right: 0; bottom: 0;
   min-width: 100%;
   z-index: -1;
 }
-
 @media (max-width: 576px) { #Typing_Video { display: none; } }
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  #Typing_Video { display: none; }
-}
+@media (prefers-reduced-motion: reduce) { #Typing_Video { display: none; } }
 
 .Video_Text {
   background: rgba(0,0,0,.55);
@@ -152,33 +153,120 @@ img:hover { filter: grayscale(5%); transform: scale(1.03); transition: transform
   position: relative;
   animation: moveVideoText 600ms ease-out both;
 }
-
 @keyframes moveVideoText { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/********* LAYOUT (Rows/Columns) *********/
+/* LAYOUT */
 .Row:after { content: ""; display: table; clear: both; }
 
 .Column_1, .Column_2 {
   float: left;
   width: 50%;
   padding: 10px;
-  min-height: 400px;           
+  min-height: 400px;
 }
-
 .Column_1 {
   padding-top: 3%;
   background-color: var(--surface);
 }
-
 .Column_2 {
   padding-top: 1.9%;
   background-color: var(--surface-contrast);
   color: #fff;
 }
-
 .Column_tall { padding-top: 3.5%; min-height: 450px; }
 
-/********* CONTACT FORM *********/
+/* SLIDESHOW (NEW addition) */
+#Slideshow_Background {
+  background: rgba(255,255,255,0.35);
+  padding: 24px 0;
+}
+.mySlides { display: none; }
+
+/* Container */
+#Slideshow_Container {
+  width: min(720px, 90vw);
+  margin: 0 auto;
+  position: relative;
+  padding-top: 8px;
+}
+
+/* Slide image */
+.Slideshow_Images {
+  width: 100%;
+  height: auto;
+  box-shadow: var(--shadow-strong);
+  border-radius: 12px;
+}
+
+/* Prev/Next controls */
+.Previous, .Next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: auto;
+  padding: 10px 14px;
+  color: #d0d0d0;
+  font-weight: 700;
+  font-size: 20px;
+  border-radius: 8px;
+  user-select: none;
+  transition: background-color .2s, color .2s, transform .2s;
+  background: rgba(0,0,0,0.35);
+  border: 0;
+}
+.Next { right: 8px; }
+.Previous { left: 8px; }
+.Previous:hover, .Next:hover { background-color: rgba(0,0,0,0.8); color: #fff; transform: scale(1.05); }
+.Previous:focus-visible, .Next:focus-visible { outline: 3px solid var(--focus); }
+
+/* Slide caption */
+.text {
+  color: #fff;
+  padding: 10px 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  letter-spacing: .2px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: rgba(0,0,0,0.7);
+  border-radius: 0 0 12px 12px;
+}
+
+/* Dots */
+.dot {
+  cursor: pointer;
+  height: 10px; width: 10px;
+  margin: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color .25s ease, transform .2s;
+  border: 1px solid rgba(0,0,0,.25);
+}
+.dot:hover { transform: scale(1.1); }
+/* Important: scope .active to dots only, added to avoid clashing with .Navbar a.active */
+.dot.active { background-color: var(--ink); }
+
+/* Fade animation */
+.fade { animation: fade 600ms ease both; }
+@keyframes fade { from { opacity: .4; } to { opacity: 1; } }
+
+/* Reduced motion: no fades/moves */
+@media (prefers-reduced-motion: reduce) {
+  .fade { animation: none; }
+  .Previous, .Next { transition: none; }
+}
+
+/* CONTACT FORM */
+form {
+  border-radius: 10px;
+  background-color: var(--surface);
+  padding: 16px;
+}
+
 input[type=text], input[type=email] {
   width: 100%;
   padding: 12px;
@@ -189,10 +277,7 @@ input[type=text], input[type=email] {
   resize: vertical;
   font: 300 16px/1.4 "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
-
-input[type=text]:hover, input[type=email]:hover {
-  box-shadow: inset 0 0 0 2px var(--accent);
-}
+input[type=text]:hover, input[type=email]:hover { box-shadow: inset 0 0 0 2px var(--accent); }
 
 input[type=submit] {
   background-color: var(--ink);
@@ -200,26 +285,72 @@ input[type=submit] {
   font-weight: 600;
   padding: 12px 20px;
   border: none;
-  border-radius: 999px;    
+  border-radius: 999px;
   cursor: pointer;
   display: block;
   margin: 0 auto;
   transition: transform 200ms, background-color 200ms, color 200ms;
 }
+input[type=submit]:hover { background-color: #fff; color: var(--ink); transform: scale(1.06); }
 
-input[type=submit]:hover {
-  background-color: #fff;
-  color: var(--ink);
-  transform: scale(1.06);
+/* Pop-up trigger button (NEW addition) */
+.Pop_Up_Button {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  background: var(--ink);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  box-shadow: var(--shadow-strong);
+  cursor: pointer;
+  z-index: 100;
+  transition: transform .2s, background-color .2s, color .2s, border-color .2s;
+}
+.Pop_Up_Button:hover { background: #fff; color: var(--ink); border-color: #bbb; transform: translateY(-1px); }
+.Pop_Up_Button:focus-visible { outline: 3px solid var(--focus); }
+
+/* Popup container */
+.form-popup {
+  z-index: 100;
+  display: none;           /* toggled by JS */
+  position: fixed;
+  right: 12px; bottom: 12px;
+  max-width: min(520px, 92vw);
 }
 
-form {
-  border-radius: 10px;
-  background-color: var(--surface);
+/* Popup form */
+.form-container {
   padding: 16px;
+  background-color: var(--surface);
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  box-shadow: var(--shadow-strong);
 }
 
-/********* UTILITIES *********/
+/* Popup buttons */
+.form-container .btn,
+.form-container .cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s, color .2s, border-color .2s, transform .2s;
+}
+.form-container .btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); transform: translateY(-1px); }
+.form-container .cancel { background: #111; color: #fff; border-color: #111; }
+.form-container .cancel:hover { background: #7a0a0a; border-color: #7a0a0a; }
+
+/* UTILITIES */
 .accent-underline {
   background-image: linear-gradient(transparent 65%, rgba(75,179,253,.35) 65%);
   background-size: 100% 100%;
@@ -238,3 +369,17 @@ form {
   z-index: 9999;
 }
 .skip-link:focus { left: 8px; top: 8px; }
+
+/* FOOTER */
+footer { padding: 2% 0; background: #fff; }
+
+/* EXTRA RESPONSIVE TWEAKS */
+/* Increase column height on very large screens (taken from sample) */
+@media (min-width: 1725px) {
+  .Column_1, .Column_2 { min-height: 550px; }
+}
+
+/* Remove h1 top margin on ultra-wide to help text fit nicely */
+@media (min-width: 2000px) {
+  h1 { margin-top: 0; }
+}

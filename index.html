@@ -1,9 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Caleb Beckwith — Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="./images/coding_icon.png">
 
     <!-- Custom font -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,9 +23,11 @@
     <!-- My Navbar -->
     <nav class="Navbar" aria-label="Primary">
       <a class="active" href="#Home">Home</a>
+      <a href="#Slideshow">Slideshow</a>
       <a href="#About">About</a>
       <a href="#GitHub">GitHub</a>
-      <a href="#Contact">Contact</a>
+      <!-- Open on click, close on double-click (to mirror the sample behavior) -->
+      <a class="contact" role="button" onclick="openForm()" ondblclick="closeForm()">Contact</a>
     </nav>
 
     <!-- Spacer below fixed navbar -->
@@ -31,7 +36,7 @@
     <!-- Home / Video -->
     <header id="Home" class="hero" role="banner" aria-label="Intro">
       <video autoplay muted loop id="Typing_Video" aria-hidden="true">
-        <!-- Put your video at images/video/Typing.mp4 (same as original) -->
+        <!-- Your video lives here -->
         <source src="./images/video/typingvid.mp4" type="video/mp4" />
         <!-- Fallback -->
         Your browser does not support HTML5 video.
@@ -48,7 +53,6 @@
             </q>
             <br> — John Romero
             <br><br>
-            <!-- Personalize this block -->
             Hi, my name is <span class="accent-underline">Caleb</span>. Welcome to my simple portfolio website.
             I’m currently a student focused on software and web development. Below you’ll find my background, some of my projects, and how to reach me.
           </p>
@@ -56,21 +60,71 @@
       </div>
     </header>
 
-    <!-- About -->
     <main>
+      <!-- Slideshow -->
+      <section id="Slideshow" aria-label="Skills and highlights slider">
+        <div id="Slideshow_Background">
+          <div id="Slideshow_Container">
+            <!-- Slide 1 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/picofme.jpg" alt="A photo or avatar of Caleb">
+              <div class="text">I'm available to assist you on your project!</div>
+            </div>
+            <!-- Slide 2 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/HTML_CSS_JS.jpg" alt="HTML, CSS, and JavaScript logos">
+              <div class="text">Front-end: HTML, CSS, JavaScript</div>
+            </div>
+            <!-- Slide 3 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/python_logo.jpg" alt="Python logo">
+              <div class="text">Learning & using Python</div>
+            </div>
+            <!-- Slide 4 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/CNET.png" alt="C# and .NET logos">
+              <div class="text">Exploring C#, .NET, and tooling</div>
+            </div>
+            <!-- Slide 5 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/SQL.jpg" alt="SQL and database imagery">
+              <div class="text">Back end basics, databases & SQL</div>
+            </div>
+            <!-- Slide 6 of 6 -->
+            <div class="mySlides fade">
+              <img class="Slideshow_Images" src="./images/pixel_computer.jpg" alt="Custom project highlight">
+              <div class="text"><a class="white-text contact" role="button" onclick="openForm()">Contact me now!</a></div>
+            </div>
+
+            <!-- Previous and next buttons -->
+            <button class="Previous" aria-label="Previous slide" onclick="plusSlides(-1)">&#10094;</button>
+            <button class="Next" aria-label="Next slide" onclick="plusSlides(1)">&#10095;</button>
+          </div>
+
+          <!-- Slideshow dots -->
+          <div style="text-align:center; margin-top: 0.5rem;">
+            <span class="dot" aria-label="Slide 1" onclick="currentSlide(1)"></span>
+            <span class="dot" aria-label="Slide 2" onclick="currentSlide(2)"></span>
+            <span class="dot" aria-label="Slide 3" onclick="currentSlide(3)"></span>
+            <span class="dot" aria-label="Slide 4" onclick="currentSlide(4)"></span>
+            <span class="dot" aria-label="Slide 5" onclick="currentSlide(5)"></span>
+            <span class="dot" aria-label="Slide 6" onclick="currentSlide(6)"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
       <section class="Row" id="About" aria-labelledby="about-heading">
         <div class="Column_2">
-          <!-- Replace with a real photo or illustration -->
           <img src="./images/programmer.jpg" alt="Illustration representing my web development work" />
         </div>
         <div class="Column_1">
           <h1 id="about-heading">About</h1>
           <p>
-            <!-- Personalize this block -->
             I am a student who loves to build useful, fast, and accessible products.
             Outside of coding, I enjoy gaming, reading, building models and watching a good show on TV.<br><br>
             I’ve studied/trained in: HTML, CSS, JavaScript, and more, and I’m actively learning
-            Python, SQL, C#, Visual Studio, .Net Framework and etc. I enjoy coding and look forward to collaborating with teams to build and create products.
+            Python, SQL, C#, Visual Studio, .NET, etc. I enjoy coding and look forward to collaborating with teams to build and create products.
             <br><br>
             I’d love to work with you on your future projects—<a href="#Contact" class="link">get in touch with me</a> below!
           </p>
@@ -81,11 +135,8 @@
       <section class="Row" id="GitHub" aria-labelledby="github-heading">
         <div class="Column_1">
           <h1 id="github-heading">GitHub</h1>
+          <p class="center">You can view my coding projects here:</p>
           <p class="center">
-            You can view my coding projects here:
-          </p>
-          <p class="center">
-            <!-- Personalize this link to your own profile -->
             <a class="link link-lg" href="https://github.com/PHOTONGHOST" target="_blank" rel="noopener">My GitHub Profile</a>
           </p>
         </div>
@@ -96,27 +147,38 @@
         </div>
       </section>
 
-      <!-- Contact -->
+      <!-- Contact (converted to pop-up) -->
       <section class="Row" id="Contact" aria-labelledby="contact-heading">
         <div class="Column_2 Column_tall">
           <img src="./images/contact_me.jpg" alt="Contact illustration" />
         </div>
+
         <div class="Column_1 Column_tall">
           <h1 id="contact-heading">Contact</h1>
+          <!-- A button to open the same form in a popup -->
+          <button class="Pop_Up_Button" type="button" onclick="openForm()">CONTACT</button>
 
-          <!-- TIP: Replace action="" with your Formspree or backend endpoint when ready -->
-          <form action="" method="POST" novalidate>
-            <label for="Name">Name:</label>
-            <input type="text" id="Name" name="Name" placeholder="Please enter your name here" autocomplete="name" required>
+          <!-- Pop-up form -->
+          <div class="form-popup" id="myForm" role="dialog" aria-modal="true" aria-labelledby="popup-title" style="display:none;">
+            <form action="https://formspree.io/f/mrblvnkg" method="POST" class="form-container" novalidate>
+              <h2 id="popup-title">Contact</h2>
 
-            <label for="Email">Email:</label>
-            <input type="email" id="Email" name="Email" placeholder="Please enter your email here" autocomplete="email" required>
+              <label for="Name"><b>Name</b></label>
+              <input type="text" id="Name" name="Name" placeholder="Please enter your name here" autocomplete="name" required>
 
-            <label for="Message">Message:</label>
-            <input type="text" id="Message" name="Message" placeholder="Please write your message here" required>
+              <label for="Email"><b>Email</b></label>
+              <input type="email" id="Email" name="Email" placeholder="Please enter your email here" autocomplete="email" required>
 
-            <input type="submit" value="SUBMIT" aria-label="Submit contact form">
-          </form>
+              <label for="Message"><b>Message</b></label>
+              <input type="text" id="Message" name="Message" placeholder="Please write your message here" required>
+
+              <div style="display:flex; gap:.5rem; margin-top:.75rem;">
+                <button type="submit" class="btn" aria-label="Submit contact form">SUBMIT</button>
+                <button type="button" class="btn cancel" onclick="closeForm()" aria-label="Close contact form">CLOSE</button>
+              </div>
+            </form>
+          </div>
+ 
         </div>
       </section>
     </main>
@@ -127,9 +189,56 @@
       <br />
     </footer>
 
-    <!-- (Optional) tiny inline script to keep the year current without changing layout or adding JS files -->
+    <!-- Minimal inline JS for year, slideshow, and contact popup -->
     <script>
+      // Keep the footer year current
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // --- Contact pop-up ---
+      function openForm() {
+        const f = document.getElementById('myForm');
+        if (f) f.style.display = 'block';
+      }
+      function closeForm() {
+        const f = document.getElementById('myForm');
+        if (f) f.style.display = 'none';
+      }
+
+      // --- Slideshow logic ---
+      let slideIndex = 1;
+      const getSlides = () => Array.from(document.getElementsByClassName('mySlides'));
+      const getDots = () => Array.from(document.getElementsByClassName('dot'));
+
+      function showSlides(n) {
+        const slides = getSlides();
+        const dots = getDots();
+        if (slides.length === 0) return;
+
+        if (n > slides.length) slideIndex = 1;
+        if (n < 1) slideIndex = slides.length;
+
+        slides.forEach(s => s.style.display = 'none');
+        dots.forEach(d => d.classList.remove('active'));
+
+        slides[slideIndex - 1].style.display = 'block';
+        if (dots[slideIndex - 1]) dots[slideIndex - 1].classList.add('active');
+      }
+
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+
+      // Expose for inline handlers
+      window.plusSlides = plusSlides;
+      window.currentSlide = currentSlide;
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => showSlides(slideIndex));
     </script>
+    <script src="./js/portfolio.js" defer></script>
   </body>
 </html>
